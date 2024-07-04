@@ -1,0 +1,81 @@
+:root {
+    /* Background */
+    --background-color: #1a1a1a;
+
+    /* Primary Colors */
+    --primary-light-blue: #84ffff;
+    /* Light Bluish Color */
+    --primary-orange: #ffa500;
+    /* Orange Color */
+
+    /* Font */
+    --header-font-family: 'Inconsolata', monospace;
+    --body-font-family: 'Inconsolata', monospace;
+    --font-color: #84ffff;
+    /* Light Bluish Font Color */
+    --secondary-font-color: #ffa500;
+    /* Orange Font Color */
+
+    /* Border */
+    --border-color: #84ffff;
+    /* Light Bluish Border Color */
+
+    /* Button */
+    --button-bg-color: #ffa500;
+    /* Orange Button Background */
+    --button-font-color: #1a1a1a;
+    /* Dark Button Font Color */
+    --button-border-color: #84ffff;
+    /* Light Bluish Border Color */
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--font-color);
+    font-family: var(--body-font-family);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--primary-light-blue);
+    font-family: var(--header-font-family);
+}
+
+p,
+a,
+span {
+    color: var(--font-color);
+    font-family: var(--body-font-family);
+}
+
+button {
+    background-color: var(--button-bg-color);
+    color: var(--button-font-color);
+    border: 2px solid var(--button-border-color);
+    font-family: var(--body-font-family);
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--primary-light-blue);
+    color: var(--background-color);
+}
+
+input,
+textarea {
+    background-color: var(--background-color);
+    color: var(--font-color);
+    border: 2px solid var(--border-color);
+    font-family: var(--body-font-family);
+    padding: 10px;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--secondary-font-color);
+}
