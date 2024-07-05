@@ -3,7 +3,7 @@
     --background-color: #1a1a1a;
 
     /* Primary Colors */
-    --primary-light-blue: #84ffff;
+    --primary-light-blue: #adfcfc;
     /* Light Bluish Color */
     --primary-orange: #ffa500;
     /* Orange Color */
@@ -11,18 +11,9 @@
     /* Font */
     --header-font-family: 'Inconsolata', monospace;
     --body-font-family: 'Inconsolata', monospace;
-    --font-color: #84ffff;
-    /* Light Bluish Font Color */
-    --secondary-font-color: #ffa500;
-    /* Orange Font Color */
 
-    /* Border */
-    --border-color: #84ffff;
-    /* Light Bluish Border Color */
 
     /* Button */
-    --button-bg-color: #ffa500;
-    /* Orange Button Background */
     --button-font-color: #1a1a1a;
     /* Dark Button Font Color */
     --button-border-color: #84ffff;
@@ -31,7 +22,7 @@
 
 body {
     background-color: var(--background-color);
-    color: var(--font-color);
+    color: var(--primary-light-blue);
     font-family: var(--body-font-family);
 }
 
@@ -44,16 +35,17 @@ h6 {
     color: var(--primary-light-blue);
     font-family: var(--header-font-family);
 }
-
+    
 p,
 a,
 span {
-    color: var(--font-color);
+    color: var(--primary-light-blue);
     font-family: var(--body-font-family);
+    font-size: 21px;
 }
 
 button {
-    background-color: var(--button-bg-color);
+    background-color: var(--primary-orange);
     color: var(--button-font-color);
     border: 2px solid var(--button-border-color);
     font-family: var(--body-font-family);
@@ -69,13 +61,167 @@ button:hover {
 input,
 textarea {
     background-color: var(--background-color);
-    color: var(--font-color);
-    border: 2px solid var(--border-color);
+    color: var(--primary-light-blue);
+    border: 2px solid var(--primary-light-blue);
     font-family: var(--body-font-family);
     padding: 10px;
 }
 
 input::placeholder,
 textarea::placeholder {
-    color: var(--secondary-font-color);
+    color: var(--primary-orange);
 }
+
+.prevent-select {
+    user-select: none; /* Prevent text selection */
+  }
+
+
+/* Main container and item general styles */
+/* Main container and item general styles */
+/* Main container and item general styles */
+
+.main-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    /* padding: 20px; */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; /* Layout items vertically */
+    align-items: center; /* Center items horizontally */
+  }
+
+  .overlaying-container {
+    position: relative; /* Ensure absolute positioning of inner divs is relative to this container */
+    width: 100%; /* Adjust width as needed */
+    height: 100%; /* Adjust height as needed */
+  }
+
+  .container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    /* padding: 20px; */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; /* Layout items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center;
+  }
+
+  
+  .item {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Footer (bottom bar) styles */
+  /* Footer (bottom bar) styles */
+  /* Footer (bottom bar) styles */
+
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow at the bottom */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .bottom-nav nav {
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .bottom-nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 16px;
+  }
+  
+  .bottom-nav li {
+    display: inline-block;
+  }
+  
+  .bottom-nav a {
+    color: var(--primary-orange);
+    text-decoration: none;
+  }
+  
+  .bottom-nav a i {
+    display: block; /* Ensures icons are displayed correctly */
+    font-size: 20px; /* Adjust icon size as needed */
+    margin-bottom: 5px; /* Optional: Adds space between icon and label */
+  }
+
+
+  /* ascii art styles */
+  /* ascii art styles */
+  /* ascii art styles */
+
+  .asciiart-wrap {
+    /* background: #000; */
+    z-index: -1;
+    position: absolute;
+    max-width: 100%;
+    max-height:100vh;
+    overflow: hidden;
+}
+.asciiart {
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    word-break: break-all;
+    color: var(--primary-light-blue);
+    font-family: monospace;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    margin-bottom: 30px;
+    padding: 3px;
+    text-align: justify;
+}
+
+.art-3 {
+    background-image: url('../img/img-text-7.jpg');
+    background-size: cover; /* Ensure background covers the element */
+    background-repeat: repeat;
+    animation: slideRight 150s linear infinite; /* Adjust animation duration as needed */
+  }
+  
+  @keyframes slideRight {
+    0% {
+      background-position: 0 0; /* Initial background position */
+    }
+    100% {
+      background-position: 100vw 0; /* Move background position to viewport width */
+    }
+  }
+  
