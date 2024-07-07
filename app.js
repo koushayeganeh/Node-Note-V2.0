@@ -15,8 +15,9 @@ app.use(expressLayouts);
 app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
 
-// routs
-app.use("/", require("./server/routs/index"));
+// routes
+app.use("/", require("./server/routes/index"));
+app.use("/", require("./server/routes/dashboard"));
 
 // 404 handler
 app.get("*", (req, res) => {
