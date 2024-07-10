@@ -7,8 +7,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginForm = document.getElementById("loginForm");
 
   // Open modal when login button is clicked
-  loginButton.addEventListener("click", function () {
-    modalElem.style.display = "block";
+  document.addEventListener("click", function (event) {
+    if (event.target.closest("#loginButton")) {
+      const modalElem = document.getElementById("loginModal");
+      modalElem.style.display = "block";
+    }
   });
 
   // Close modal when close button (X) is clicked
