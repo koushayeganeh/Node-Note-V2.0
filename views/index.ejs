@@ -508,8 +508,6 @@
 
     <div class="container" style="max-width: 600px; margin-top: 200px">
       <h1>Welcome To Your Notes!</h1>
-      <!-- <a href="/auth">Log In</a> -->
-      <!-- <button id="loginButton">Login</button> -->
       <a class="link" id="loginButton">Login</a>
     </div>
 
@@ -519,7 +517,12 @@
         <span class="close">&times;</span>
         <p>Login with Username & Password or Google Authentication:</p>
         <div class="modal-form-container">
-          <form id="loginForm">
+          <div
+            id="errorContainer"
+            class="error-message"
+            style="display: none"
+          ></div>
+          <form id="loginForm" action="/login" method="POST">
             <input
               type="text"
               id="username"
