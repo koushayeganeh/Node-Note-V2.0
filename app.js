@@ -2,9 +2,9 @@ require("dotenv").config();
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const mongoose = require("mongoose");
+const MongoStore = require("connect-mongo");
 const session = require("express-session");
 const passport = require("passport");
-const flash = require("connect-flash");
 const connectDB = require("./server/config/db");
 
 const app = express();
@@ -21,28 +21,24 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Express session
+const sessionStore = MongoStore.create({
+  mongoUrl: process.env.MONGODB_URI,
+  collectionName: "sessions", // Specify collection name if needed
+});
+
 app.use(
   session({
-    secret: "secret",
-    resave: true,
-    saveUninitialized: true,
+    secret: "yourSecretKey",
+    resave: false,
+    saveUninitialized: false,
+    store: sessionStore,
+    cookie: { maxAge: 180 * 60 * 1000 }, // 3 hours
   })
 );
 
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Connect flash
-app.use(flash());
-
-// Global variables for flash messages
-app.use((req, res, next) => {
-  res.locals.success_msg = req.flash("success_msg");
-  res.locals.error_msg = req.flash("error_msg");
-  res.locals.error = req.flash("error");
-  next();
-});
 
 // Static files
 app.use(express.static("public"));

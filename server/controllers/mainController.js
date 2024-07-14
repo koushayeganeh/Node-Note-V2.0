@@ -2,7 +2,7 @@
 exports.homePage = async (req, res) => {
   const locals = {
     title: "My Notes",
-    description: "Kousha's personal notes",
+    description: "Best Notes App Ever",
   };
 
   res.render("index", {

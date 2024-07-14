@@ -3,6 +3,6 @@ module.exports = {
     if (req.isAuthenticated()) {
       return next();
     }
-    res.redirect("/");
+    res.send("You Don't have access to this page");
   },
 };

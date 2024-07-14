@@ -6,9 +6,6 @@ const passport = require("passport");
 // Load User model
 const User = require("../models/User");
 
-// Login Page
-router.get("/login", (req, res) => res.render("login"));
-
 // Register Page
 router.get("/register", (req, res) => res.render("register"));
 
@@ -49,11 +46,9 @@ router.post("/register", (req, res) => {
             newUser
               .save()
               .then((user) => {
-                req.flash(
-                  "success_msg",
-                  "You are now registered and can log in"
+                res.redirect(
+                  "/login?message=You+are+now+registered+and+can+log+in"
                 );
-                res.redirect("/login");
               })
               .catch((err) => console.log(err));
           });
@@ -86,13 +81,25 @@ router.post("/login", (req, res, next) => {
 });
 
 // Logout
-router.get("/logout", (req, res) => {
+router.get("/logout", (req, res, next) => {
+  console.log("Logout requested");
+
   req.logout((err) => {
     if (err) {
+      console.log("Logout error: ", err);
       return next(err);
     }
-    req.flash("success_msg", "You are logged out");
-    res.redirect("/login");
+
+    req.session.destroy((err) => {
+      if (err) {
+        console.log("Error destroying session: ", err);
+        return res.redirect("/?message=Error+destroying+session");
+      }
+
+      console.log("Session destroyed");
+      res.clearCookie("connect.sid", { path: "/" });
+      res.redirect("/?message=You+are+logged+out");
+    });
   });
 });
 
