@@ -10,6 +10,7 @@ router.get(
   ensureAuthenticated,
   dashboardController.dashboardAddNote
 );
+
 router.post(
   "/dashboard/add-note",
   ensureAuthenticated,

@@ -332,6 +332,46 @@ img {
   margin-bottom: 10px;
 }
 
+/* DASHBOARD PAGE */
+/* DASHBOARD PAGE */
+/* DASHBOARD PAGE */
+
+.notes-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+}
+
+.note-preview {
+  background-color: rgb(31, 31, 31);
+  position: relative;
+  padding-left: 32px;
+}
+
+.note-preview::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  /* Width of the red rectangle */
+  height: 100%;
+  /* Height of the red rectangle matches the height of the container */
+  background-color: var(--primary-orange);
+}
+
+.note-preview h2,
+p {
+  margin: 8px 0;
+}
+
+.note-preview p {
+  font-size: small;
+}
+
+
 /* ADD NOTE PAGE */
 /* ADD NOTE PAGE */
 /* ADD NOTE PAGE */

@@ -15,11 +15,44 @@ exports.dashboard = async (req, res) => {
       "User Dashboard to view, add, update, and delete personal notes.",
   };
 
-  res.render("./dashboard/index", {
-    userName: capitalizeFirstLetter(req.user.username),
-    locals,
-    layout: "./layouts/dashboard",
-  });
+  try {
+    // const notes = await Note.find({}).where({ user: req.user.id }).lean();
+
+    const notes = await Note.aggregate([
+      { $match: { user: req.user._id } },
+      { $sort: { createdAt: -1 } },
+      {
+        $project: {
+          title: {
+            $cond: {
+              if: { $gt: [{ $strLenCP: "$title" }, 50] },
+              then: { $concat: [{ $substrCP: ["$title", 0, 50] }, "..."] },
+              else: "$title",
+            },
+          },
+          body: {
+            $cond: {
+              if: { $gt: [{ $strLenCP: "$body" }, 20] },
+              then: { $concat: [{ $substrCP: ["$body", 0, 20] }, "..."] },
+              else: "$body",
+            },
+          },
+          createdAt: 1,
+        },
+      },
+    ]);
+
+    res.render("./dashboard/index", {
+      userName: capitalizeFirstLetter(req.user.username),
+      notes,
+      locals,
+      layout: "./layouts/dashboard",
+    });
+    console.log(notes);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Server Error");
+  }
 };
 
 // GET
