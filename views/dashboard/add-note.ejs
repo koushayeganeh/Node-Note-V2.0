@@ -1,0 +1,28 @@
+<div class="main-container">
+  <div class="container">
+    <h1 class="item">Add a new Note</h1>
+    <div class="container">
+      <form
+        class="add-note-form"
+        id="addNoteForm"
+        action="/dashboard/add-note"
+        method="POST"
+      >
+        <input
+          type="text"
+          id="title"
+          name="title"
+          placeholder="Title"
+          required
+        />
+        <textarea
+          name="body"
+          id="body"
+          placeholder="Write Your Note..."
+          required
+        ></textarea>
+        <button type="submit">+ Add</button>
+      </form>
+    </div>
+  </div>
+</div>

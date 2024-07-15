@@ -28,7 +28,7 @@ const sessionStore = MongoStore.create({
 
 app.use(
   session({
-    secret: "yourSecretKey",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
