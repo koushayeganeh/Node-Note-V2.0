@@ -1,0 +1,36 @@
+<div class="main-container">
+  <div class="container">
+    <h1 class="item">Note: <%= note.title %></h1>
+    <div class="container">
+      <form
+        class="add-note-form"
+        id="addNoteForm"
+        action="/dashboard/note/<%= note.id %>?_method=PUT"
+        method="POST"
+      >
+        <input
+          type="text"
+          id="title"
+          name="title"
+          placeholder="Title"
+          value="<%= note.title %>"
+        />
+        <textarea name="body" id="body" placeholder="Write Your Note...">
+<%= note.body %></textarea
+        >
+        <button type="submit">Update</button>
+        <button type="button" id="discardButton">Discard</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const discardButton = document.getElementById("discardButton");
+
+    discardButton.addEventListener("click", function () {
+      window.location.href = "/dashboard"; // Redirect to the dashboard
+    });
+  });
+</script>

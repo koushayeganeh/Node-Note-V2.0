@@ -16,8 +16,6 @@ exports.dashboard = async (req, res) => {
   };
 
   try {
-    // const notes = await Note.find({}).where({ user: req.user.id }).lean();
-
     const notes = await Note.aggregate([
       { $match: { user: req.user._id } },
       { $sort: { createdAt: -1 } },
@@ -48,7 +46,6 @@ exports.dashboard = async (req, res) => {
       locals,
       layout: "./layouts/dashboard",
     });
-    console.log(notes);
   } catch (error) {
     console.log(error);
     res.status(500).send("Server Error");
@@ -80,5 +77,52 @@ exports.dashboardAddNoteSubmit = async (req, res) => {
     res.redirect("/dashboard");
   } catch (error) {
     console.log(error);
+  }
+};
+
+// GET
+// dashboardViewNote
+
+exports.dashboardViewNote = async (req, res) => {
+  const noteId = req.params.id;
+  const note = await Note.findById(noteId);
+
+  const locals = {
+    title: `Dashboard | ${note.title}`,
+    description: "note view page",
+  };
+
+  try {
+    if (!note) {
+      return res.status(404).send("Note not found");
+    }
+    res.render("./dashboard/note", {
+      note,
+      locals,
+      layout: "./layouts/dashboard",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Server error");
+  }
+};
+
+// POST
+// dashboardUpdateNote
+
+exports.dashboardUpdateNote = async (req, res) => {
+  try {
+    const noteId = req.params.id;
+    const note = await Note.findById(noteId);
+    if (!note) {
+      return res.status(404).send("Note not found");
+    }
+    note.title = req.body.title;
+    note.body = req.body.body;
+    await note.save();
+    res.redirect("/dashboard");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Server error");
   }
 };

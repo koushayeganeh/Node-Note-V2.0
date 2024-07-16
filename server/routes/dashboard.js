@@ -5,6 +5,7 @@ const { ensureAuthenticated } = require("../config/authMiddleware");
 
 // dashboard routes
 router.get("/dashboard", ensureAuthenticated, dashboardController.dashboard);
+
 router.get(
   "/dashboard/add-note",
   ensureAuthenticated,
@@ -15,6 +16,18 @@ router.post(
   "/dashboard/add-note",
   ensureAuthenticated,
   dashboardController.dashboardAddNoteSubmit
+);
+
+router.get(
+  "/dashboard/note/:id",
+  ensureAuthenticated,
+  dashboardController.dashboardViewNote
+);
+
+router.put(
+  "/dashboard/note/:id",
+  ensureAuthenticated,
+  dashboardController.dashboardUpdateNote
 );
 
 module.exports = router;

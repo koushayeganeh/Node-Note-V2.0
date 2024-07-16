@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
+const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
@@ -19,6 +20,8 @@ connectDB();
 // Body parser middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+// override with POST having ?_method=DELETE or ?_method=PUT
+app.use(methodOverride("_method"));
 
 // Express session
 const sessionStore = MongoStore.create({

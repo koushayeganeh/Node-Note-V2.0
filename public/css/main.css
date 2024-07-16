@@ -348,6 +348,7 @@ img {
   background-color: rgb(31, 31, 31);
   position: relative;
   padding-left: 32px;
+  text-decoration: none;
 }
 
 .note-preview::before {
@@ -356,13 +357,11 @@ img {
   top: 0;
   left: 0;
   width: 10px;
-  /* Width of the red rectangle */
   height: 100%;
-  /* Height of the red rectangle matches the height of the container */
   background-color: var(--primary-orange);
 }
 
-.note-preview h2,
+.note-preview h3,
 p {
   margin: 8px 0;
 }
