@@ -370,6 +370,25 @@ p {
   font-size: small;
 }
 
+.note-header-container {
+  width: 100%;
+  display: flex;
+
+}
+
+.delete-note-form {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+}
+.delete-note-form button {
+  min-width: 132px;
+  border: none;
+
+}
+
 
 /* ADD NOTE PAGE */
 /* ADD NOTE PAGE */

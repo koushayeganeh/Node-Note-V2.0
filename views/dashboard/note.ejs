@@ -1,6 +1,16 @@
 <div class="main-container">
   <div class="container">
-    <h1 class="item">Note: <%= note.title %></h1>
+    <div class="note-header-container">
+      <h1 class="item">Note: <%= note.title %></h1>
+      <form
+        class="delete-note-form"
+        id="deleteNoteForm"
+        action="/dashboard/note/<%= note.id %>?_method=DELETE"
+        method="POST"
+      >
+        <button type="submit" id="deleteButton">Delete</button>
+      </form>
+    </div>
     <div class="container">
       <form
         class="add-note-form"

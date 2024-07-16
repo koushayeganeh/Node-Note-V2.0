@@ -30,4 +30,10 @@ router.put(
   dashboardController.dashboardUpdateNote
 );
 
+router.delete(
+  "/dashboard/note/:id",
+  ensureAuthenticated,
+  dashboardController.dashboardDeleteNote
+);
+
 module.exports = router;

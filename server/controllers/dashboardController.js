@@ -126,3 +126,21 @@ exports.dashboardUpdateNote = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
+
+// DELETE
+// dashboardDeleteNote
+
+exports.dashboardDeleteNote = async (req, res) => {
+  try {
+    const noteId = req.params.id;
+    const note = await Note.findById(noteId);
+    if (!note) {
+      return res.status(404).send("Note not found");
+    }
+    await note.deleteOne({ _id: noteId });
+    res.redirect("/dashboard");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Server error");
+  }
+};
