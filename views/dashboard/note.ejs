@@ -2,14 +2,17 @@
   <div class="container">
     <div class="note-header-container">
       <h1 class="item">Note: <%= note.title %></h1>
-      <form
+      <!-- <form
         class="delete-note-form"
         id="deleteNoteForm"
         action="/dashboard/note/<%= note.id %>?_method=DELETE"
         method="POST"
       >
         <button type="submit" id="deleteButton">Delete</button>
-      </form>
+      </form> -->
+      <div class="delete-note-wrapper">
+        <button type="submit" id="deleteButton">Delete</button>
+      </div>
     </div>
     <div class="container">
       <form
@@ -33,6 +36,48 @@
       </form>
     </div>
   </div>
+
+  <!-- Modal container -->
+  <div id="deleteModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>
+        Are you sure about deleting the note: <br />
+        <span style="font-weight: bold; color: var(--primary-orange)"
+          ><%= note.title %></span
+        >
+      </p>
+      <div class="modal-form-container">
+        <div
+          id="errorContainer"
+          class="error-message"
+          style="display: none"
+        ></div>
+        <div class="delete-modal-buttons-container">
+          <div>
+            <button class="delete-modal-button" id="deleteDiscard">
+              No, Cancle
+            </button>
+          </div>
+          <div>
+            <form
+              id="deleteNoteForm"
+              action="/dashboard/note/<%= note.id %>?_method=DELETE"
+              method="POST"
+            >
+              <button
+                class="delete-modal-button"
+                type="submit"
+                id="deleteButton"
+              >
+                Yes, Delete
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -44,3 +89,5 @@
     });
   });
 </script>
+
+<script src="/js/handlers/delete-modal-handler.js"></script>

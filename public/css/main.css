@@ -376,18 +376,34 @@ p {
 
 }
 
-.delete-note-form {
+.delete-note-wrapper {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: end;
   align-items: center;
 }
-.delete-note-form button {
+
+.delete-note-wrapper button {
   min-width: 132px;
   border: none;
-
 }
+
+.delete-modal-buttons-container {
+  width: 70%;
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 64px;
+}
+
+.delete-modal-button {
+  min-width: 132px;
+  border: none;
+}
+
 
 
 /* ADD NOTE PAGE */
