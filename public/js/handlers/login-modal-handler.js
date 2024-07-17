@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const loginButton = document.getElementById("loginButton");
+  const loginButtons = document.querySelectorAll(".loginButton");
   const modalElem = document.getElementById("loginModal");
   const closeBtn = document.querySelector(".close");
   const loginForm = document.getElementById("loginForm");
@@ -27,9 +27,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Open modal when login button is clicked
-  loginButton.addEventListener("click", function () {
-    openModal();
-    history.pushState(null, null, location.href); // Push a state to handle back button correctly
+  loginButtons.forEach(function (loginButton) {
+    loginButton.addEventListener("click", function () {
+      openModal();
+      history.pushState(null, null, location.href); // Push a state to handle back button correctly
+    });
   });
 
   // Close modal when close button (X) is clicked

@@ -1,15 +1,16 @@
 <div class="main-container">
   <div class="container">
     <div class="note-header-container">
-      <h1 class="item">Note: <%= note.title %></h1>
-      <!-- <form
-        class="delete-note-form"
-        id="deleteNoteForm"
-        action="/dashboard/note/<%= note.id %>?_method=DELETE"
-        method="POST"
-      >
-        <button type="submit" id="deleteButton">Delete</button>
-      </form> -->
+      <div class="item">
+        <h1 style="margin: 8px 0">Note: <%= note.title %></h1>
+        <span style="font-size: x-small; color: var(--primary-orange)"
+          >Created at: <%= formattedCreatedAt %></span
+        >
+        <br />
+        <span style="font-size: smaller; color: var(--primary-orange)"
+          >Updated at: <%= formattedUpdatedAt %></span
+        >
+      </div>
       <div class="delete-note-wrapper">
         <button type="submit" id="deleteButton">Delete</button>
       </div>
@@ -44,7 +45,7 @@
       <p>
         Are you sure about deleting the note: <br />
         <span style="font-weight: bold; color: var(--primary-orange)"
-          ><%= note.title %></span
+          >"<%= note.title %>"</span
         >
       </p>
       <div class="modal-form-container">

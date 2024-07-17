@@ -92,6 +92,7 @@ textarea::placeholder {
   max-width: 100%;
   margin: 0 auto;
   /* padding: 20px; */
+  padding-top: 32px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -381,7 +382,7 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: end;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .delete-note-wrapper button {

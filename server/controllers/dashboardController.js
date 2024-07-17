@@ -5,6 +5,19 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
+// Function to format the date
+function formatDate(date) {
+  const options = {
+    weekday: "short",
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+  return new Date(date).toLocaleDateString("en-US", options).replace(",", "");
+}
+
 // GET
 // Dashboard
 
@@ -18,20 +31,20 @@ exports.dashboard = async (req, res) => {
   try {
     const notes = await Note.aggregate([
       { $match: { user: req.user._id } },
-      { $sort: { createdAt: -1 } },
+      { $sort: { updatedAt: -1 } },
       {
         $project: {
           title: {
             $cond: {
               if: { $gt: [{ $strLenCP: "$title" }, 50] },
-              then: { $concat: [{ $substrCP: ["$title", 0, 50] }, "..."] },
+              then: { $concat: [{ $substrCP: ["$title", 0, 60] }, "..."] },
               else: "$title",
             },
           },
           body: {
             $cond: {
               if: { $gt: [{ $strLenCP: "$body" }, 20] },
-              then: { $concat: [{ $substrCP: ["$body", 0, 20] }, "..."] },
+              then: { $concat: [{ $substrCP: ["$body", 0, 50] }, "..."] },
               else: "$body",
             },
           },
@@ -96,8 +109,15 @@ exports.dashboardViewNote = async (req, res) => {
     if (!note) {
       return res.status(404).send("Note not found");
     }
+
+    // Format the dates
+    const formattedCreatedAt = formatDate(note.createdAt);
+    const formattedUpdatedAt = formatDate(note.updatedAt);
+
     res.render("./dashboard/note", {
       note,
+      formattedCreatedAt,
+      formattedUpdatedAt,
       locals,
       layout: "./layouts/dashboard",
     });
@@ -107,7 +127,7 @@ exports.dashboardViewNote = async (req, res) => {
   }
 };
 
-// POST
+// PUT
 // dashboardUpdateNote
 
 exports.dashboardUpdateNote = async (req, res) => {
