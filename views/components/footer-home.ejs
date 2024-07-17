@@ -4,9 +4,15 @@
       <li>
         <a href="/">Home Page</a>
       </li>
+      <% if (!user) { %>
       <li>
         <a class="link loginButton" id="loginButton-footer">Login</a>
       </li>
+      <% } else { %>
+      <li>
+        <a href="/logout">Logout</a>
+      </li>
+      <% } %>
     </ul>
   </nav>
 </footer>

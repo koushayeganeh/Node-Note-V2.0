@@ -90,6 +90,7 @@ router.get(
   "/auth/google",
   passport.authenticate("google", {
     scope: ["email", "profile"],
+    prompt: "select_account", // Prompt to select an account each time
   })
 );
 

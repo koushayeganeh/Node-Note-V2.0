@@ -98,17 +98,22 @@ exports.dashboardAddNoteSubmit = async (req, res) => {
 
 exports.dashboardViewNote = async (req, res) => {
   const noteId = req.params.id;
-  const note = await Note.findById(noteId);
-
-  const locals = {
-    title: `Dashboard | ${note.title}`,
-    description: "note view page",
-  };
 
   try {
+    const note = await Note.findById(noteId);
+
     if (!note) {
       return res.status(404).send("Note not found");
     }
+
+    if (note.user.toString() !== req.user._id.toString()) {
+      return res.status(403).send("Unauthorized");
+    }
+
+    const locals = {
+      title: `Dashboard | ${note.title}`,
+      description: "note view page",
+    };
 
     // Format the dates
     const formattedCreatedAt = formatDate(note.createdAt);
@@ -134,9 +139,15 @@ exports.dashboardUpdateNote = async (req, res) => {
   try {
     const noteId = req.params.id;
     const note = await Note.findById(noteId);
+
     if (!note) {
       return res.status(404).send("Note not found");
     }
+
+    if (note.user.toString() !== req.user._id.toString()) {
+      return res.status(403).send("Unauthorized");
+    }
+
     note.title = req.body.title;
     note.body = req.body.body;
     await note.save();
@@ -154,10 +165,16 @@ exports.dashboardDeleteNote = async (req, res) => {
   try {
     const noteId = req.params.id;
     const note = await Note.findById(noteId);
+
     if (!note) {
       return res.status(404).send("Note not found");
     }
-    await note.deleteOne({ _id: noteId });
+
+    if (note.user.toString() !== req.user._id.toString()) {
+      return res.status(403).send("Unauthorized");
+    }
+
+    await note.deleteOne();
     res.redirect("/dashboard");
   } catch (error) {
     console.log(error);

@@ -98,10 +98,13 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Ensure modal state is correctly set on initial load
-  const modalState = sessionStorage.getItem("modalOpen");
-  if (modalState === "true") {
-    openModal();
-  } else {
-    closeModal();
+  if (sessionStorage.getItem("modalOpen") === null) {
+    sessionStorage.setItem("modalOpen", "false");
   }
+  closeModal(); // Ensure modal is closed initially
+
+  // Reset modal state when navigating away from the page
+  window.addEventListener("beforeunload", function () {
+    sessionStorage.setItem("modalOpen", "false");
+  });
 });

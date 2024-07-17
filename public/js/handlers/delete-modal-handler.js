@@ -3,17 +3,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalElem = document.getElementById("deleteModal");
   const closeBtn = document.querySelector(".close");
   const discardBtn = document.getElementById("deleteDiscard");
-  const loginForm = document.getElementById("loginForm");
-  const errorContainer = document.getElementById("errorContainer");
 
   function closeModal() {
     modalElem.style.display = "none";
-    sessionStorage.setItem("modalOpen", "false");
+    sessionStorage.setItem("deleteModalOpen", "false");
   }
 
   function openModal() {
     modalElem.style.display = "block";
-    sessionStorage.setItem("modalOpen", "true");
+    sessionStorage.setItem("deleteModalOpen", "true");
   }
 
   // Open modal when delete button (out of the modal) is clicked
@@ -39,13 +37,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Delete note when delete button (inside the modal) is clicked
-  // this is handled by the delet button as a form in the note page itself
-
   // Handle browser back button
   window.addEventListener("popstate", function (event) {
     const state = event.state || {};
-    if (state.modalOpen) {
+    if (state.deleteModalOpen) {
       openModal();
     } else {
       closeModal();
@@ -53,15 +48,13 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Ensure modal state is correctly set on initial load
-  const modalState = sessionStorage.getItem("modalOpen");
-  if (modalState === "true") {
-    openModal();
-  } else {
-    closeModal();
+  if (sessionStorage.getItem("deleteModalOpen") === null) {
+    sessionStorage.setItem("deleteModalOpen", "false");
   }
+  closeModal(); // Ensure modal is closed initially
 
   // Reset modal state when navigating away from the page
   window.addEventListener("beforeunload", function () {
-    sessionStorage.setItem("modalOpen", "false");
+    sessionStorage.setItem("deleteModalOpen", "false");
   });
 });

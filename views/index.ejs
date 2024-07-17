@@ -508,7 +508,13 @@
 
     <div class="container" style="max-width: 600px; margin-top: 200px">
       <h1>Welcome To Your Notes!</h1>
+      <% if (!user) { %>
       <a class="link loginButton" id="loginButton">Login</a>
+      <% } else { %>
+      <p>You are logged in as <%= user.username %></p>
+      <a class="link" href="/dashboard">Go To Your Dashboard</a>
+      <a class="link" href="/logout">Logout</a>
+      <% } %>
     </div>
   </div>
 </div>
