@@ -43,6 +43,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Set global variable for user
+app.use((req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
+
 // Static files
 app.use(express.static("public"));
 
