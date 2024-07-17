@@ -6,7 +6,7 @@ const connectDB = async () => {
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
       ssl: true, // Assuming SSL is required
     });
-    console.log(`connected to the database at ${conn.connection.host}`);
+    // console.log(`connected to the database at ${conn.connection.host}`);
   } catch (error) {
     console.log(`Error: ${error.message}`);
   }

@@ -52,9 +52,24 @@ module.exports = function (passport) {
           if (user) {
             return done(null, user);
           } else {
+            // Check for existing username and generate a unique one if needed
+            let username = profile.displayName;
+            const existingUser = await User.findOne({ username: username });
+            if (existingUser) {
+              // Generate a unique username by appending a number
+              let counter = 1;
+              let newUsername;
+              do {
+                newUsername = `${username}${counter}`;
+                counter++;
+              } while (await User.findOne({ username: newUsername }));
+
+              username = newUsername;
+            }
+
             user = new User({
               googleId: profile.id,
-              username: profile.displayName,
+              username: username,
               email: profile.emails[0].value,
               accessToken: token,
             });

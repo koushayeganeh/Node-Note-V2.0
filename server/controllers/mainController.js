@@ -3,8 +3,8 @@ const { isLoggedIn } = require("../config/authMiddleware");
 
 exports.homePage = async (req, res) => {
   const locals = {
-    title: "My Notes",
-    description: "Best Notes App Ever",
+    title: "90s Notes",
+    description: "The retro notes you miss these days",
   };
 
   res.render("index", {

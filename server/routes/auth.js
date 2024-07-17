@@ -115,7 +115,7 @@ router.get("/logout", ensureAuthenticated, async (req, res) => {
       const url = `https://accounts.google.com/o/oauth2/revoke?token=${req.user.accessToken}`;
       try {
         const response = await axios.get(url);
-        console.log("Token revoked:", response.data);
+        // console.log("Token revoked:", response.data);
       } catch (error) {
         if (error.response && error.response.status === 400) {
           console.log("Token might be already invalidated or expired.");
