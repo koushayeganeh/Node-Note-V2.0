@@ -14,6 +14,7 @@
   "author": "@koushayeganeh",
   "license": "MIT",
   "dependencies": {
+    "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
     "connect-mongo": "^5.1.0",
     "dotenv": "^16.4.5",
@@ -25,6 +26,7 @@
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.1",
     "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0"
   },
   "devDependencies": {

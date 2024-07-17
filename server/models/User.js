@@ -8,11 +8,16 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
+  },
+  googleId: {
+    type: String,
   },
   date: {
     type: Date,
     default: Date.now,
+  },
+  accessToken: {
+    type: String,
   },
 });
 

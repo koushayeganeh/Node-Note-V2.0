@@ -1,3 +1,4 @@
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
@@ -32,6 +33,37 @@ module.exports = function (passport) {
         } catch (err) {
           console.log("Error during authentication:", err);
           return done(err);
+        }
+      }
+    )
+  );
+
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: "/auth/google/callback",
+      },
+      async (token, tokenSecret, profile, done) => {
+        try {
+          let user = await User.findOne({ googleId: profile.id });
+
+          if (user) {
+            return done(null, user);
+          } else {
+            user = new User({
+              googleId: profile.id,
+              username: profile.displayName,
+              email: profile.emails[0].value,
+              accessToken: token,
+            });
+
+            await user.save();
+            return done(null, user);
+          }
+        } catch (err) {
+          return done(err, false);
         }
       }
     )

@@ -2,12 +2,14 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const axios = require("axios");
+const { isLoggedIn, ensureAuthenticated } = require("../config/authMiddleware");
 
 // Load User model
 const User = require("../models/User");
 
 // Register Page
-router.get("/register", (req, res) => res.render("register"));
+router.get("/register", isLoggedIn, (req, res) => res.render("register"));
 
 // Register
 router.post("/register", (req, res) => {
@@ -58,6 +60,9 @@ router.post("/register", (req, res) => {
   }
 });
 
+// Login Page
+router.get("/login", isLoggedIn, (req, res) => res.render("login"));
+
 // Login
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
@@ -80,27 +85,65 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-// Logout
-router.get("/logout", (req, res, next) => {
-  console.log("Logout requested");
+// Google login route
+router.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["email", "profile"],
+  })
+);
 
-  req.logout((err) => {
-    if (err) {
-      console.log("Logout error: ", err);
-      return next(err);
+// Retrieve user data
+router.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/login-failure",
+    successRedirect: "/dashboard",
+  })
+);
+
+// Route if something goes wrong
+router.get("/login-failure", (req, res) => {
+  res.send("login failed...");
+});
+
+// Destroy user session
+router.get("/logout", ensureAuthenticated, async (req, res) => {
+  try {
+    if (req.user && req.user.accessToken) {
+      const url = `https://accounts.google.com/o/oauth2/revoke?token=${req.user.accessToken}`;
+      try {
+        const response = await axios.get(url);
+        console.log("Token revoked:", response.data);
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          console.log("Token might be already invalidated or expired.");
+        } else {
+          throw error;
+        }
+      }
     }
 
-    req.session.destroy((err) => {
+    req.logout((err) => {
       if (err) {
-        console.log("Error destroying session: ", err);
-        return res.redirect("/?message=Error+destroying+session");
+        console.log("Error logging out:", err);
+        return res.send("Error logging out");
       }
 
-      console.log("Session destroyed");
-      res.clearCookie("connect.sid", { path: "/" });
-      res.redirect("/?message=You+are+logged+out");
+      req.session.destroy((error) => {
+        if (error) {
+          console.log("Error destroying session:", error);
+          return res.send("Error destroying session");
+        } else {
+          res.clearCookie("connect.sid", { path: "/" });
+          res.redirect("/?message=You+are+logged+out");
+        }
+      });
     });
-  });
+  } catch (error) {
+    console.log("Unexpected error during logout:", error);
+    res.send("Error logging out");
+  }
 });
 
 module.exports = router;
